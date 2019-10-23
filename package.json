@@ -1,0 +1,22 @@
+{
+  "name": "bot_baobab",
+  "version": "1.0.0",
+  "description": "Bot de telegram del profesor Baobab",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CharlesterWide/Bot_Baobab.git"
+  },
+  "keywords": [
+    "Telegram"
+  ],
+  "author": "CharlesterWide",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CharlesterWide/Bot_Baobab/issues"
+  },
+  "homepage": "https://github.com/CharlesterWide/Bot_Baobab#readme"
+}
