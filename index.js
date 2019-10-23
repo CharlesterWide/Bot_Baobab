@@ -1,7 +1,7 @@
 //El siguiente código es un ejemplo de servidor web escrito en Node.js.
 
 const TelegramBot = require('node-telegram-bot-api');
-const token = '777213469:AAEUKXNqCErAnNBhOnt4zM5YAda3JHJwLoE';
+const token = 'Heje que cagada';
 const Baobab = new TelegramBot(token, { polling: true });
 
 const http = require('http');
