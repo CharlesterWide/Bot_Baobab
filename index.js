@@ -1,25 +1,11 @@
 
 const TelegramBot = require('node-telegram-bot-api');
-const token = 'Not a token';
+const token = 'Not a Token';
 const Baobab = new TelegramBot(token, { polling: true });
 
 var P = require('pokedex-promise-v2');
 var Pokedex = new P();
 
-const http = require('http');
-
-const hostname = '127.0.0.1';
-const port = 3000;
-
-const server = http.createServer((req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Hola Mundo\n');
-});
-
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
 
 
 Baobab.onText(/^\/start/, function (msg) {
