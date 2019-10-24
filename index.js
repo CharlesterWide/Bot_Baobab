@@ -1,12 +1,22 @@
+process.env["NTBA_FIX_319"] = 1;
+
 
 const TelegramBot = require('node-telegram-bot-api');
-const token = 'Not a Token';
+const token = 'Not a token';
 const Baobab = new TelegramBot(token, { polling: true });
 
 var P = require('pokedex-promise-v2');
 var Pokedex = new P();
 
 
+// Variables de consulta y movidas exta
+
+const tipos = {
+  esp : ['Acero','Agua','Bicho','Dragón','Eléctrico','Fantasma','Fuego','Hada','Hielo','Lucha','Normal','Planta','Psíquico','Roca','Siniestro','Tierra','Veneno','Volador'],
+  ing : ['steel','water','bug','dragon','electric','ghost','fire','fairy','ice','fighting','normal','grass','psychic','rock','dark','ground','poison','flying']
+};
+
+console.log("Bot iniciado");
 
 Baobab.onText(/^\/start/, function (msg) {
     console.log(msg);
@@ -28,21 +38,32 @@ Baobab.onText(/^\/help/, function(msg){
 
 
 Baobab.onText(/^\/Pokemon/, function (msg) {
-    console.log(msg);
+    //console.log(msg);
     var chatId = msg.chat.id;
     var texto = msg.text.toString().toLocaleLowerCase();
     texto = texto.split(" ");
     var pokemon = texto[1];
 
-    var mensaje = "";
-
     console.log("Pokemon a buscar: " + pokemon);
+
 
     Pokedex.getPokemonByName(pokemon) // with Promise
     .then(function(response) {
-      //console.log(response);
+
       mensaje = "Nombre: " + response.forms[0].name +
-      "\n" + "Índice en la Pokedex: " + response.id.toString();
+      "\n" + "Índice en la Pokedex: " + response.id.toString() + "\n";
+
+      if(response.types.length > 1){
+        mensaje += "Tipos: ";
+        mensaje += tipos.esp[tipos.ing.indexOf(response.types[0].type.name.toString())];
+        mensaje += "/";
+        mensaje += tipos.esp[tipos.ing.indexOf(response.types[1].type.name.toString())];
+      }else{
+        mensaje += "Tipo: ";
+        mensaje += tipos.esp[tipos.ing.indexOf(response.types[0].type.name.toString())];
+      }
+      
+
       
       Baobab.sendPhoto(chatId,response.sprites.front_default.toString(),{caption: mensaje});
     })
@@ -50,8 +71,11 @@ Baobab.onText(/^\/Pokemon/, function (msg) {
       
       mensaje = "Error al buscar a "+ pokemon+ "\n Nombre mal introducido o pokemon no existente";
       Baobab.sendMessage(chatId, mensaje );
-      console.log('There was an ERROR: ', error);
+      console.log('There was an ERROR');
     });
 
     
 });
+
+
+Baobab.on("polling_error", (err) => console.log(err));
