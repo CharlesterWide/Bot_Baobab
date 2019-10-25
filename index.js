@@ -2,7 +2,7 @@ process.env["NTBA_FIX_319"] = 1;
 
 
 const TelegramBot = require('node-telegram-bot-api');
-const token = '777213469:AAEUKXNqCErAnNBhOnt4zM5YAda3JHJwLoE';
+const token = 'Not a token';
 const Baobab = new TelegramBot(token, { polling: true });
 
 const Pokedex = require('./Pokedex');
