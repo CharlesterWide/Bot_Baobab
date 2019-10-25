@@ -46,36 +46,56 @@ Baobab.onText(/^\/Pokemon/, function (msg) {
 
     console.log("Pokemon a buscar: " + pokemon);
 
-
-    Pokedex.getPokemonByName(pokemon) // with Promise
-    .then(function(response) {
-
-      mensaje = "Nombre: " + response.forms[0].name +
-      "\n" + "Índice en la Pokedex: " + response.id.toString() + "\n";
-
-      if(response.types.length > 1){
-        mensaje += "Tipos: ";
-        mensaje += tipos.esp[tipos.ing.indexOf(response.types[0].type.name.toString())];
-        mensaje += "/";
-        mensaje += tipos.esp[tipos.ing.indexOf(response.types[1].type.name.toString())];
+    BuscaPokemon(pokemon).then(function(resolve){
+      if(resolve.code == 'ok'){
+        Baobab.sendPhoto(chatId,resolve.img,{caption: resolve.data});
       }else{
-        mensaje += "Tipo: ";
-        mensaje += tipos.esp[tipos.ing.indexOf(response.types[0].type.name.toString())];
+        mensaje = "Error al buscar a "+ pokemon+ "\n Nombre mal introducido o pokemon no existente";
+        Baobab.sendMessage(chatId, mensaje );
+        //console.log('There was an ERROR');
       }
-      
-
-      
-      Baobab.sendPhoto(chatId,response.sprites.front_default.toString(),{caption: mensaje});
-    })
-    .catch(function(error) {
-      
-      mensaje = "Error al buscar a "+ pokemon+ "\n Nombre mal introducido o pokemon no existente";
-      Baobab.sendMessage(chatId, mensaje );
-      console.log('There was an ERROR');
+    }).catch(function(err){
+      console.log(err);
     });
 
-    
+   
 });
 
 
 Baobab.on("polling_error", (err) => console.log(err));
+
+
+var BuscaPokemon = function(pokemon){
+  var respuesta = {code : 'ko',data : '', img : ''};
+  var promise = new Promise(function(resolve,reject){
+    setTimeout(function(){
+      
+      Pokedex.getPokemonByName(pokemon).then(function(response) {
+
+        respuesta.data = "Nombre: " + response.forms[0].name +
+        "\n" + "Índice en la Pokedex: " + response.id.toString() + "\n";
+  
+        if(response.types.length > 1){
+          respuesta.data += "Tipos: ";
+          respuesta.data += tipos.esp[tipos.ing.indexOf(response.types[0].type.name.toString())];
+          respuesta.data += "/";
+          respuesta.data += tipos.esp[tipos.ing.indexOf(response.types[1].type.name.toString())];
+        }else{
+          respuesta.data += "Tipo: ";
+          respuesta.data += tipos.esp[tipos.ing.indexOf(response.types[0].type.name.toString())];
+        }
+        
+        respuesta.img = response.sprites.front_default.toString();
+
+        respuesta.code = 'ok';
+        resolve(respuesta);
+        console.log(respuesta);
+      })
+      .catch(function(error) { 
+        console.log('There was an ERROR');
+      });
+
+    },2000);
+  });
+  return promise;
+};
