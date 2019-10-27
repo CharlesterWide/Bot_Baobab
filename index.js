@@ -5,16 +5,12 @@ const TelegramBot = require('node-telegram-bot-api');
 const token = 'Not a token';
 const Baobab = new TelegramBot(token, { polling: true });
 
-var P = require('pokedex-promise-v2');
-var Pokedex = new P();
+const Pokedex = require('./Pokedex');
 
 
 // Variables de consulta y movidas exta
 
-const tipos = {
-  esp : ['Acero','Agua','Bicho','Dragón','Eléctrico','Fantasma','Fuego','Hada','Hielo','Lucha','Normal','Planta','Psíquico','Roca','Siniestro','Tierra','Veneno','Volador'],
-  ing : ['steel','water','bug','dragon','electric','ghost','fire','fairy','ice','fighting','normal','grass','psychic','rock','dark','ground','poison','flying']
-};
+
 
 console.log("Bot iniciado");
 
@@ -32,8 +28,9 @@ Baobab.onText(/^\/help/, function(msg){
     var chatId = msg.chat.id;
 
     Baobab.sendMessage(chatId, "Ahora mismo estoy trabajando para ofrecerte más servicios"
-    + "\n Comandos disponibles: "
-    +"/Pokemon Nombre del Pokemon para que te de la inforación de un Pokemon");
+    + "\nComandos disponibles: "
+    +"/Pokemon Nombre o número del Pokemon para que te de la inforación de un Pokemon"+
+    "\n/Random para ver un Pokemon de manera aleatoria");
 });
 
 
@@ -46,36 +43,34 @@ Baobab.onText(/^\/Pokemon/, function (msg) {
 
     console.log("Pokemon a buscar: " + pokemon);
 
-
-    Pokedex.getPokemonByName(pokemon) // with Promise
-    .then(function(response) {
-
-      mensaje = "Nombre: " + response.forms[0].name +
-      "\n" + "Índice en la Pokedex: " + response.id.toString() + "\n";
-
-      if(response.types.length > 1){
-        mensaje += "Tipos: ";
-        mensaje += tipos.esp[tipos.ing.indexOf(response.types[0].type.name.toString())];
-        mensaje += "/";
-        mensaje += tipos.esp[tipos.ing.indexOf(response.types[1].type.name.toString())];
+    Pokedex.BuscaPokemon(pokemon).then(function(resolve){
+      if(resolve.code == 'ok'){
+        Baobab.sendPhoto(chatId,resolve.img,{caption: resolve.data});
       }else{
-        mensaje += "Tipo: ";
-        mensaje += tipos.esp[tipos.ing.indexOf(response.types[0].type.name.toString())];
+        mensaje = "Error al buscar a "+ pokemon+ "\n Nombre mal introducido o pokemon no existente";
+        Baobab.sendMessage(chatId, mensaje );
+        //console.log('There was an ERROR');
       }
-      
-
-      
-      Baobab.sendPhoto(chatId,response.sprites.front_default.toString(),{caption: mensaje});
-    })
-    .catch(function(error) {
-      
-      mensaje = "Error al buscar a "+ pokemon+ "\n Nombre mal introducido o pokemon no existente";
-      Baobab.sendMessage(chatId, mensaje );
-      console.log('There was an ERROR');
+    }).catch(function(err){
+      console.log(err);Random
     });
+});
 
-    
+Baobab.onText(/^\/Random/, function (msg) {
+  //console.log(msg);
+  var chatId = msg.chat.id;
+
+
+  Pokedex.Random().then(function(resolve){
+    if(resolve.code == 'ok'){
+      Baobab.sendPhoto(chatId,resolve.img,{caption: resolve.data});
+    }
+  }).catch(function(err){
+    console.log(err);
+  });
 });
 
 
 Baobab.on("polling_error", (err) => console.log(err));
+
+
