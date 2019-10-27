@@ -28,8 +28,9 @@ Baobab.onText(/^\/help/, function(msg){
     var chatId = msg.chat.id;
 
     Baobab.sendMessage(chatId, "Ahora mismo estoy trabajando para ofrecerte más servicios"
-    + "\n Comandos disponibles: "
-    +"/Pokemon Nombre del Pokemon para que te de la inforación de un Pokemon");
+    + "\nComandos disponibles: "
+    +"/Pokemon Nombre o número del Pokemon para que te de la inforación de un Pokemon"+
+    "\n/Random para ver un Pokemon de manera aleatoria");
 });
 
 
@@ -51,10 +52,22 @@ Baobab.onText(/^\/Pokemon/, function (msg) {
         //console.log('There was an ERROR');
       }
     }).catch(function(err){
-      console.log(err);
+      console.log(err);Random
     });
+});
 
-   
+Baobab.onText(/^\/Random/, function (msg) {
+  //console.log(msg);
+  var chatId = msg.chat.id;
+
+
+  Pokedex.Random().then(function(resolve){
+    if(resolve.code == 'ok'){
+      Baobab.sendPhoto(chatId,resolve.img,{caption: resolve.data});
+    }
+  }).catch(function(err){
+    console.log(err);
+  });
 });
 
 
