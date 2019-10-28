@@ -2,7 +2,7 @@ process.env["NTBA_FIX_319"] = 1;
 
 
 const TelegramBot = require('node-telegram-bot-api');
-const token = 'Not a token';
+const token = 'Not a Token';
 const Baobab = new TelegramBot(token, { polling: true });
 
 const Pokedex = require('./Pokedex');
@@ -15,7 +15,9 @@ const Pokedex = require('./Pokedex');
 console.log("Bot iniciado");
 
 Baobab.onText(/^\/start/, function (msg) {
-    console.log(msg);
+  console.log("Chat:" + msg.chat.id);
+  console.log("Usuario: " + msg.from.username);
+  console.log("Texto: " + msg.text.toString());
     var chatId = msg.chat.id;
     var username = msg.from.username;
 
@@ -24,18 +26,24 @@ Baobab.onText(/^\/start/, function (msg) {
 });
 
 Baobab.onText(/^\/help/, function(msg){
-    console.log(msg);
+    console.log("Chat:" + msg.chat.id);
+    console.log("Usuario: " + msg.from.username);
+    console.log("Texto: " + msg.text.toString());
     var chatId = msg.chat.id;
 
     Baobab.sendMessage(chatId, "Ahora mismo estoy trabajando para ofrecerte más servicios"
     + "\nComandos disponibles: "
-    +"/Pokemon Nombre o número del Pokemon para que te de la inforación de un Pokemon"+
-    "\n/Random para ver un Pokemon de manera aleatoria");
+    +"\n\n/Pokemon Nombre o número del Pokemon para que te de la inforación de un Pokemon"
+    +"\n\n/Random para ver un Pokemon de manera aleatoria"
+    +"\n\n/Habilidad número de la habilidad o nombre en inglés para ver la información de la habilidad"
+    +"\n\n/Stats Nombre o número del Pokemon para ver su información completa");
 });
 
 
 Baobab.onText(/^\/Pokemon/, function (msg) {
-    //console.log(msg);
+  console.log("Chat:" + msg.chat.id);
+  console.log("Usuario: " + msg.from.username);
+  console.log("Texto: " + msg.text.toString());
     var chatId = msg.chat.id;
     var texto = msg.text.toString().toLocaleLowerCase();
     texto = texto.split(" ");
@@ -49,7 +57,7 @@ Baobab.onText(/^\/Pokemon/, function (msg) {
       }else{
         mensaje = "Error al buscar a "+ pokemon+ "\n Nombre mal introducido o pokemon no existente";
         Baobab.sendMessage(chatId, mensaje );
-        //console.log('There was an ERROR');
+        console.log('There was an ERROR');
       }
     }).catch(function(err){
       console.log(err);Random
@@ -57,7 +65,9 @@ Baobab.onText(/^\/Pokemon/, function (msg) {
 });
 
 Baobab.onText(/^\/Random/, function (msg) {
-  //console.log(msg);
+  console.log("Chat:" + msg.chat.id);
+    console.log("Usuario: " + msg.from.username);
+    console.log("Texto: " + msg.text.toString());
   var chatId = msg.chat.id;
 
 
@@ -68,6 +78,26 @@ Baobab.onText(/^\/Random/, function (msg) {
   }).catch(function(err){
     console.log(err);
   });
+});
+
+
+Baobab.onText(/^\/Habilidad/, function(msg){
+  console.log("Chat:" + msg.chat.id);
+    console.log("Usuario: " + msg.from.username);
+    console.log("Texto: " + msg.text.toString());
+  var chatId = msg.chat.id;
+    var texto = msg.text.toString().toLocaleLowerCase();
+    texto = texto.split(" ");
+    var habilidad = texto[1];
+
+    Pokedex.Habilidad(habilidad).then(function (resolve){
+      if(resolve.code == 'ok'){
+        Baobab.sendMessage(chatId, resolve.data);
+        console.log(resolve);
+      }
+    }).catch(function(err){
+      console.log(err);
+    });
 });
 
 
