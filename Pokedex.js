@@ -166,6 +166,15 @@ var Pokedex = {
           },2000);
         });
         return promise;
+      },
+
+      Cria : function(pokemon){
+        var respuesta = {code : 'ko',data : '', img : ''};
+        var promise = new Promise(function(resolve,reject){
+          setTimeout(function(){
+
+          },2000);
+        });
       }
 
 }
