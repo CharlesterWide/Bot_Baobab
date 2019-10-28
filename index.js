@@ -2,7 +2,7 @@ process.env["NTBA_FIX_319"] = 1;
 
 
 const TelegramBot = require('node-telegram-bot-api');
-const token = 'Not a Token';
+const token = 'Not a token';
 const Baobab = new TelegramBot(token, { polling: true });
 
 const Pokedex = require('./Pokedex');
@@ -47,21 +47,26 @@ Baobab.onText(/^\/Pokemon/, function (msg) {
     var chatId = msg.chat.id;
     var texto = msg.text.toString().toLocaleLowerCase();
     texto = texto.split(" ");
-    var pokemon = texto[1];
+    if(texto.length < 2){
+      Baobab.sendMessage(chatId, "Hace falta meter el nombre o número del Pokemon junto al comando" );
+    }else{
+      var pokemon = texto[1];
 
-    console.log("Pokemon a buscar: " + pokemon);
-
-    Pokedex.BuscaPokemon(pokemon).then(function(resolve){
-      if(resolve.code == 'ok'){
-        Baobab.sendPhoto(chatId,resolve.img,{caption: resolve.data});
-      }else{
-        mensaje = "Error al buscar a "+ pokemon+ "\n Nombre mal introducido o pokemon no existente";
-        Baobab.sendMessage(chatId, mensaje );
-        console.log('There was an ERROR');
-      }
-    }).catch(function(err){
-      console.log(err);Random
-    });
+      console.log("Pokemon a buscar: " + pokemon);
+  
+      Pokedex.BuscaPokemon(pokemon).then(function(resolve){
+        if(resolve.code == 'ok'){
+          Baobab.sendPhoto(chatId,resolve.img,{caption: resolve.data});
+        }else{
+          mensaje = "Error al buscar a "+ pokemon+ "\n Nombre mal introducido o pokemon no existente";
+          Baobab.sendMessage(chatId, mensaje );
+          console.log('There was an ERROR');
+        }
+      }).catch(function(err){
+        console.log(err);Random
+      });
+    }
+    
 });
 
 Baobab.onText(/^\/Random/, function (msg) {
@@ -88,16 +93,51 @@ Baobab.onText(/^\/Habilidad/, function(msg){
   var chatId = msg.chat.id;
     var texto = msg.text.toString().toLocaleLowerCase();
     texto = texto.split(" ");
-    var habilidad = texto[1];
+    if(texto.length < 2){
+      Baobab.sendMessage(chatId, "Hace falta meter el nombre en inglés o número de habilidad junto al comando" );
+    }else{
+      var habilidad = texto[1];
 
-    Pokedex.Habilidad(habilidad).then(function (resolve){
-      if(resolve.code == 'ok'){
-        Baobab.sendMessage(chatId, resolve.data);
-        console.log(resolve);
-      }
-    }).catch(function(err){
-      console.log(err);
-    });
+      Pokedex.Habilidad(habilidad).then(function (resolve){
+        if(resolve.code == 'ok'){
+          Baobab.sendMessage(chatId, resolve.data);
+          console.log(resolve);
+        }
+      }).catch(function(err){
+        console.log(err);
+      });
+    }
+  
+});
+
+
+Baobab.onText(/^\/Stats/, function (msg) {
+  console.log("Chat:" + msg.chat.id);
+  console.log("Usuario: " + msg.from.username);
+  console.log("Texto: " + msg.text.toString());
+    var chatId = msg.chat.id;
+    var texto = msg.text.toString().toLocaleLowerCase();
+    texto = texto.split(" ");
+    if(texto.length < 2){
+      Baobab.sendMessage(chatId, "Hace falta meter el nombre o número del Pokemon junto al comando" );
+    }else{
+      var pokemon = texto[1];
+
+      console.log("Pokemon a buscar: " + pokemon);
+  
+      Pokedex.Stats(pokemon).then(function(resolve){
+        if(resolve.code == 'ok'){
+          Baobab.sendPhoto(chatId,resolve.img,{caption: resolve.data});
+        }else{
+          mensaje = "Error al buscar a "+ pokemon+ "\n Nombre mal introducido o pokemon no existente";
+          Baobab.sendMessage(chatId, mensaje );
+          console.log('There was an ERROR');
+        }
+      }).catch(function(err){
+        console.log(err);Random
+      });
+    }
+   
 });
 
 
