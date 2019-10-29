@@ -64,7 +64,7 @@ Baobab.onText(/^\/Pokemon/, function (msg) {
         console.log('There was an ERROR');
       }
     }).catch(function (err) {
-      console.log(err); Random
+      console.log(err);
     });
   }
 
@@ -83,6 +83,8 @@ Baobab.onText(/^\/Random/, function (msg) {
     }
   }).catch(function (err) {
     console.log(err);
+    mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+    Baobab.sendMessage(chatId, mensaje);
   });
 });
 
@@ -103,9 +105,15 @@ Baobab.onText(/^\/Habilidad/, function (msg) {
       if (resolve.code == 'ok') {
         Baobab.sendMessage(chatId, resolve.data);
         console.log(resolve);
+      } else {
+        mensaje = "Error al buscar la habilidad " + habilidad + "\n Nombre mal introducido o pokemon no existente";
+        Baobab.sendMessage(chatId, mensaje);
+        console.log('There was an ERROR');
       }
     }).catch(function (err) {
       console.log(err);
+      mensaje = "Error al buscar la habilidad " + habilidad + "\n Nombre mal introducido o pokemon no existente";
+      Baobab.sendMessage(chatId, mensaje);
     });
   }
 
@@ -135,7 +143,9 @@ Baobab.onText(/^\/Stats/, function (msg) {
         console.log('There was an ERROR');
       }
     }).catch(function (err) {
-      console.log(err); Random
+      console.log(err);
+      mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+      Baobab.sendMessage(chatId, mensaje);
     });
   }
 
@@ -165,7 +175,9 @@ Baobab.onText(/^\/Debilidades/, function (msg) {
         console.log('There was an ERROR');
       }
     }).catch(function (err) {
-      console.log(err); Random
+      console.log(err);
+      mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+      Baobab.sendMessage(chatId, mensaje);
     });
   }
 

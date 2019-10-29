@@ -15,7 +15,7 @@ const danelement = [
   /*Dragon*/   [   1, 0.5,   1,   2, 0.5,   1, 0.5,   2,   2,   1,   1, 0.5,   1,   1,   1,   1,   1,   1],
   /*Electrico*/[ 0.5,   1,   1,   1, 0.5,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   2,   1, 0.5],
   /*Fantasma*/ [   1,   1, 0.5,   1,   1,   2,   1,   1,   1,   0,   0,   1,   1,   1,   2,   1, 0.5,   1],
-  /*Fuego*/    [ 0.5,   2, 0.5,   1,   1,   1, 0.5, 0.5, 0.5,   1,   1, 0.5,   1,   2,   0,   2,   1,   1],
+  /*Fuego*/    [ 0.5,   2, 0.5,   1,   1,   1, 0.5, 0.5, 0.5,   1,   1, 0.5,   1,   2,   1,   2,   1,   1],
   /*Hada*/     [   2,   1, 0.5,   0,   1,   1,   1,   1,   1, 0.5,   1,   1,   1,   1, 0.5,   1,   2,   1],
   /*Hielo*/    [   2,   1,   1,   1,   1,   1,   2,   1, 0.5,   2,   1,   1,   1,   2,   1,   1,   1,   1],
   /*Lucha*/    [   1,   1, 0.5,   1,   1,   1,   1,   2,   1,   1,   1,   1,   2, 0.5, 0.5,   1,   1,   2],
@@ -51,6 +51,7 @@ var Pokedex = {
             respuesta.data += tipos.esp[tipos.ing.indexOf(response.types[0].type.name.toString())];
           }
 
+          respuesta.data += "\nPara ver sus estadísticas escribe /Stats "+ response.forms[0].name;
           if(response.sprites.front_default != null){
             respuesta.img = response.sprites.front_default.toString();
           }
@@ -99,13 +100,15 @@ var Pokedex = {
             respuesta.img = response.sprites.front_default.toString();
           }
 
+          respuesta.data += "\nPara ver sus estadísticas escribe /Stats "+ response.forms[0].name;
+
           respuesta.code = 'ok';
           resolve(respuesta);
           console.log(respuesta);
         })
           .catch(function (error) {
             console.log('There was an ERROR', error);
-            reject(error);
+            reject(respuesta);
           });
 
       }, 2000);
@@ -137,6 +140,7 @@ var Pokedex = {
             respuesta.data += "Tipo: ";
             respuesta.data += tipos.esp[tipos.ing.indexOf(response.types[0].type.name.toString())];
           }
+          respuesta.data += "\nPara ver sus debilidades escribe /Debilidades " +response.forms[0].name;
           var peso = response.weight / 10;
           var altura = response.height / 10;
           respuesta.data += "\nPeso: " + peso.toString() + "kg";
@@ -214,7 +218,7 @@ var Pokedex = {
             console.log('There was an ERROR', error);
           });
         }).catch(function (error) {
-          reject(error);
+          reject(respuesta);
           console.log('There was an ERROR', error);
         });
 
@@ -239,7 +243,7 @@ var Pokedex = {
         })
           .catch(function (error) {
             console.log('There was an ERROR', error);
-            reject(error);
+            reject(respuesta);
           });
 
       }, 2000);
@@ -370,7 +374,7 @@ var Pokedex = {
         })
           .catch(function (error) {
             console.log('There was an ERROR', error);
-            reject(error);
+            reject(respuesta);
           });
       }, 2000);
     });
