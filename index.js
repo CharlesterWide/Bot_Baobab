@@ -2,7 +2,7 @@ process.env["NTBA_FIX_319"] = 1;
 
 
 const TelegramBot = require('node-telegram-bot-api');
-const token = 'Not a Token';
+const token = 'Not a token';
 const Baobab = new TelegramBot(token, { polling: true });
 
 const Pokedex = require('./Pokedex');
@@ -36,7 +36,8 @@ Baobab.onText(/^\/help/, function (msg) {
     + "\n\n/Pokemon Nombre o número del Pokemon para que te de la inforación de un Pokemon"
     + "\n\n/Random para ver un Pokemon de manera aleatoria"
     + "\n\n/Habilidad número de la habilidad o nombre en inglés para ver la información de la habilidad"
-    + "\n\n/Stats Nombre o número del Pokemon para ver su información completa");
+    + "\n\n/Stats Nombre o número del Pokemon para ver su información completa"
+    + "\n\n/Debilidades Nombre o número del Pokemon para ver sus resistencias elementales");
 });
 
 
@@ -117,8 +118,6 @@ Baobab.onText(/^\/Stats/, function (msg) {
   console.log("Texto: " + msg.text.toString());
   var chatId = msg.chat.id;
   var texto = msg.text.toString().toLocaleLowerCase();
-  var img = "";
-  var data = "";
   texto = texto.split(" ");
   if (texto.length < 2) {
     Baobab.sendMessage(chatId, "Hace falta meter el nombre o número del Pokemon junto al comando");
@@ -128,45 +127,45 @@ Baobab.onText(/^\/Stats/, function (msg) {
     console.log("Pokemon a buscar: " + pokemon);
 
     Pokedex.Stats(pokemon).then(function (resolve) {
-      img = resolve.img;
-      data = resolve.data;
       if (resolve.code == 'ok') {
-        Pokedex.Habilidad(resolve.extra[0]).then(function (res) {
-          if (res.code == 'ok') {
-            data += "\nHabilidades: \n";
-            data += res.data;
-            if (resolve.extra.length < 2) {
-              Baobab.sendPhoto(chatId, img, { caption: data });
-            } else {
-              Pokedex.Habilidad(resolve.extra[1]).then(function (r) {
-                if (r.code == "ok") {
-                  data += "\n" + res.data;
-                  Baobab.sendPhoto(chatId, img, { caption: data });
-                } else {
-                  mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
-                  Baobab.sendMessage(chatId, mensaje);
-                  console.log('There was an ERROR');
-                }
-              }).catch(function (err) {
-                console.log(err);
-              });
-            }
-          } else {
-            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
-            Baobab.sendMessage(chatId, mensaje);
-            console.log('There was an ERROR');
-          }
-
-        }).catch(function (err) {
-          console.log(err);
-        });
+        Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
       } else {
         mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
         Baobab.sendMessage(chatId, mensaje);
         console.log('There was an ERROR');
       }
     }).catch(function (err) {
-      console.log(err);
+      console.log(err); Random
+    });
+  }
+
+});
+
+
+Baobab.onText(/^\/Debilidades/, function (msg) {
+  console.log("Chat:" + msg.chat.id);
+  console.log("Usuario: " + msg.from.username);
+  console.log("Texto: " + msg.text.toString());
+  var chatId = msg.chat.id;
+  var texto = msg.text.toString().toLocaleLowerCase();
+  texto = texto.split(" ");
+  if (texto.length < 2) {
+    Baobab.sendMessage(chatId, "Hace falta meter el nombre o número del Pokemon junto al comando");
+  } else {
+    var pokemon = texto[1];
+
+    console.log("Pokemon a buscar: " + pokemon);
+
+    Pokedex.Debilidades(pokemon).then(function (resolve) {
+      if (resolve.code == 'ok') {
+        Baobab.sendMessage(chatId, resolve.data);
+      } else {
+        mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+        Baobab.sendMessage(chatId, mensaje);
+        console.log('There was an ERROR');
+      }
+    }).catch(function (err) {
+      console.log(err); Random
     });
   }
 
