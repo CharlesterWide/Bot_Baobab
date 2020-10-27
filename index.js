@@ -2,7 +2,7 @@ process.env["NTBA_FIX_319"] = 1;
 
 
 const TelegramBot = require('node-telegram-bot-api');
-const token = 'Not a token';
+const token = 'Not a Token';
 const Baobab = new TelegramBot(token, { polling: true });
 
 const Pokedex = require('./Pokedex');
@@ -559,11 +559,17 @@ var tipos = function(chatId) {
     });
 }
 
+/*#############################################################################################################
+
+                             Pokeballs y captura
+
+###############################################################################################################*/
+
 var funpokeballs = function(msg) {
     var chatId = msg.chat.id;
     var msgId = msg.message_id;
     //Baobab.deleteMessage(chatId, msgId);
-    Baobab.sendMessage(chatId, "¿Cuántos tipos quieres?", {
+    Baobab.sendMessage(chatId, "¿Qué PokeBall quieres usar?", {
         reply_markup: {
             inline_keyboard: [
                 [

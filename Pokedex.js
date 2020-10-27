@@ -221,7 +221,10 @@ var Pokedex = {
                     respuesta.data += "\nPeso: " + peso.toString() + "kg";
                     respuesta.data += "\nAltura: " + altura.toString() + "m";
 
-                    respuesta.data += "\nExperiencia base: " + response.base_experience.toString() + "\n";
+                    if (response.base_experience != null) {
+                        respuesta.data += "\nExperiencia base: " + response.base_experience.toString() + "\n";
+                    }
+
 
                     respuesta.data += "\nHabilidades: \n\n";
                     if (response.abilities.length > 0) {
