@@ -179,11 +179,12 @@ Baobab.onText(/^\/Pokemon/, function(msg) {
                 Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
             } else {
                 mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
-                Baobab.sendMessage(chatId, mensaje);
+                Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
                 console.log('There was an ERROR');
             }
         }).catch(function(err) {
-            console.log(err);
+            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+            Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
         });
     }
 
@@ -204,11 +205,12 @@ var Busca = function(msg) {
             Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
         } else {
             mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
-            Baobab.sendMessage(chatId, mensaje);
+            Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
             console.log('There was an ERROR');
         }
     }).catch(function(err) {
-        console.log(err);
+        mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+        Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
     });
 
 }
@@ -342,13 +344,13 @@ Baobab.onText(/^\/Stats/, function(msg) {
                 Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
             } else {
                 mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
-                Baobab.sendMessage(chatId, mensaje);
+                Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
                 console.log('There was an ERROR');
             }
         }).catch(function(err) {
             console.log(err);
             mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
-            Baobab.sendMessage(chatId, mensaje);
+            Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
         });
     }
 
@@ -370,13 +372,13 @@ var Stats = function(msg) {
             Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
         } else {
             mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
-            Baobab.sendMessage(chatId, mensaje);
+            Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
             console.log('There was an ERROR');
         }
     }).catch(function(err) {
         console.log(err);
         mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
-        Baobab.sendMessage(chatId, mensaje);
+        Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
     });
 }
 
@@ -409,13 +411,13 @@ Baobab.onText(/^\/Debilidades/, function(msg) {
                 Baobab.sendMessage(chatId, resolve.data);
             } else {
                 mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
-                Baobab.sendMessage(chatId, mensaje);
+                Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
                 console.log('There was an ERROR');
             }
         }).catch(function(err) {
             console.log(err);
             mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
-            Baobab.sendMessage(chatId, mensaje);
+            Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
         });
     }
 
@@ -436,13 +438,13 @@ var Debilidades = function(msg) {
             Baobab.sendMessage(chatId, resolve.data);
         } else {
             mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
-            Baobab.sendMessage(chatId, mensaje);
+            Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
             console.log('There was an ERROR');
         }
     }).catch(function(err) {
         console.log(err);
         mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
-        Baobab.sendMessage(chatId, mensaje);
+        Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
     });
 
 }

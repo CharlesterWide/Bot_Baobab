@@ -126,7 +126,7 @@ var Pokedex = {
                     })
                     .catch(function(error) {
                         console.log('There was an ERROR', error);
-                        reject(error);
+                        reject(respuesta);
                     });
 
             }, 2000);
