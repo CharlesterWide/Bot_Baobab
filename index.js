@@ -19,6 +19,7 @@ Baobab.onText(/^\/start/, function(msg) {
     console.log("Chat:" + msg.chat.id);
     console.log("Usuario: " + msg.from.username);
     console.log("Texto: " + msg.text.toString());
+    console.log(Date());
     var chatId = msg.chat.id;
     var username = msg.from.username;
     var msgId = msg.message_id;
@@ -78,7 +79,7 @@ Baobab.on('message', function(msg) {
     console.log("Chat:" + msg.chat.id);
     console.log("Usuario: " + msg.from.username);
     console.log("Texto: " + msg.text.toString());
-
+    console.log(Date());
     var chatId = msg.chat.id;
     var npet = 0;
 
@@ -134,6 +135,7 @@ Baobab.onText(/^\/help/, function(msg) {
     console.log("Chat:" + msg.chat.id);
     console.log("Usuario: " + msg.from.username);
     console.log("Texto: " + msg.text.toString());
+    console.log(Date());
     var chatId = msg.chat.id;
     var msgId = msg.message_id;
     Baobab.deleteMessage(chatId, msgId);
@@ -162,6 +164,7 @@ Baobab.onText(/^\/Pokemon/, function(msg) {
     console.log("Chat:" + msg.chat.id);
     console.log("Usuario: " + msg.from.username);
     console.log("Texto: " + msg.text.toString());
+    console.log(Date());
     var chatId = msg.chat.id;
     var texto = msg.text.toString().toLocaleLowerCase();
     var msgId = msg.message_id;
@@ -225,6 +228,7 @@ Baobab.onText(/^\/Random/, function(msg) {
     console.log("Chat:" + msg.chat.id);
     console.log("Usuario: " + msg.from.username);
     console.log("Texto: " + msg.text.toString());
+    console.log(Date());
     var chatId = msg.chat.id;
     var msgId = msg.message_id;
     Baobab.deleteMessage(chatId, msgId);
@@ -266,6 +270,7 @@ Baobab.onText(/^\/Habilidad/, function(msg) {
     console.log("Chat:" + msg.chat.id);
     console.log("Usuario: " + msg.from.username);
     console.log("Texto: " + msg.text.toString());
+    console.log(Date());
     var chatId = msg.chat.id;
     var texto = msg.text.toString().toLocaleLowerCase();
     var msgId = msg.message_id;
@@ -327,6 +332,7 @@ Baobab.onText(/^\/Stats/, function(msg) {
     console.log("Chat:" + msg.chat.id);
     console.log("Usuario: " + msg.from.username);
     console.log("Texto: " + msg.text.toString());
+    console.log(Date());
     var chatId = msg.chat.id;
     var texto = msg.text.toString().toLocaleLowerCase();
     var msgId = msg.message_id;
@@ -394,6 +400,7 @@ Baobab.onText(/^\/Debilidades/, function(msg) {
     console.log("Chat:" + msg.chat.id);
     console.log("Usuario: " + msg.from.username);
     console.log("Texto: " + msg.text.toString());
+    console.log(Date());
     var chatId = msg.chat.id;
     var texto = msg.text.toString().toLocaleLowerCase();
     var msgId = msg.message_id;
@@ -464,6 +471,7 @@ Baobab.onText(/^\/Tipos/, function(msg) {
     console.log("Chat:" + msg.chat.id);
     console.log("Usuario: " + msg.from.username);
     console.log("Texto: " + msg.text.toString());
+    console.log(Date());
     var chatId = msg.chat.id;
     var msgId = msg.message_id;
     Baobab.deleteMessage(chatId, msgId);

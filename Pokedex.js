@@ -227,6 +227,37 @@ var Pokedex = {
 
 
                     respuesta.data += "\nHabilidades: \n\n";
+                    var hp, attack, defense, special_a, special_d, speed;
+                    for (i = 0; i < response.stats.length; i++) {
+                        switch (response.stats[i].stat.name) {
+                            case "hp":
+                                hp = response.stats[i].base_stat;
+                                break;
+                            case "attack":
+                                attack = response.stats[i].base_stat;
+                                break;
+                            case "defense":
+                                defense = response.stats[i].base_stat;
+                                break;
+                            case "special-attack":
+                                special_a = response.stats[i].base_stat;
+                                break;
+                            case "special-defense":
+                                special_d = response.stats[i].base_stat;
+                                break;
+                            case "speed":
+                                speed = response.stats[i].base_stat;
+                                break;
+                        }
+                    }
+                    var stat = "Estadísticas base: \n" +
+                        "Hp: " + hp + "\n" +
+                        "Ataque: " + attack + "\n" +
+                        "Defensa: " + defense + "\n" +
+                        "Att. Especial: " + special_a + "\n" +
+                        "Deff. Especial: " + special_d + "\n" +
+                        "Velocidad: " + speed + "\n";
+                    console.log(stat);
                     if (response.abilities.length > 0) {
 
                         Pokedex.Habilidad(response.abilities[0].ability.name).then(function(res) {
@@ -241,13 +272,7 @@ var Pokedex = {
 
                                             respuesta.data += "\n";
 
-                                            respuesta.data += "Estadísticas base: \n" +
-                                                "Hp: " + response.stats[0].base_stat + "\n" +
-                                                "Ataque: " + response.stats[1].base_stat + "\n" +
-                                                "Defensa: " + response.stats[2].base_stat + "\n" +
-                                                "Att. Especial: " + response.stats[3].base_stat + "\n" +
-                                                "Deff. Especial: " + response.stats[4].base_stat + "\n" +
-                                                "Velocidad: " + response.stats[5].base_stat + "\n";
+                                            respuesta.data += stat;
 
 
                                             respuesta.code = 'ok';
@@ -260,13 +285,7 @@ var Pokedex = {
                                     } else {
                                         respuesta.data += "\n";
 
-                                        respuesta.data += "Estadísticas base: \n" +
-                                            "Hp: " + response.stats[5].base_stat + "\n" +
-                                            "Ataque: " + response.stats[4].base_stat + "\n" +
-                                            "Defensa: " + response.stats[3].base_stat + "\n" +
-                                            "Att. Especial: " + response.stats[2].base_stat + "\n" +
-                                            "Deff. Especial: " + response.stats[1].base_stat + "\n" +
-                                            "Velocidad: " + response.stats[0].base_stat + "\n";
+                                        respuesta.data += stat;
 
                                         respuesta.code = 'ok';
                                         resolve(respuesta);
@@ -279,13 +298,7 @@ var Pokedex = {
                             } else {
                                 respuesta.data += "\n";
 
-                                respuesta.data += "Estadísticas base: \n" +
-                                    "Hp: " + response.stats[5].base_stat + "\n" +
-                                    "Ataque: " + response.stats[4].base_stat + "\n" +
-                                    "Defensa: " + response.stats[3].base_stat + "\n" +
-                                    "Att. Especial: " + response.stats[2].base_stat + "\n" +
-                                    "Deff. Especial: " + response.stats[1].base_stat + "\n" +
-                                    "Velocidad: " + response.stats[0].base_stat + "\n";
+                                respuesta.data += stat;
 
 
                                 respuesta.code = 'ok';
@@ -300,13 +313,7 @@ var Pokedex = {
                     } else {
                         respuesta.data += "Puede que las habilidades de este pokemon no estén en la base de datos toadvía, ten paciencia\n\n";
 
-                        respuesta.data += "Estadísticas base: \n" +
-                            "Hp: " + response.stats[5].base_stat + "\n" +
-                            "Ataque: " + response.stats[4].base_stat + "\n" +
-                            "Defensa: " + response.stats[3].base_stat + "\n" +
-                            "Att. Especial: " + response.stats[2].base_stat + "\n" +
-                            "Deff. Especial: " + response.stats[1].base_stat + "\n" +
-                            "Velocidad: " + response.stats[0].base_stat + "\n";
+                        respuesta.data += stat;
 
 
                         respuesta.code = 'ok';
