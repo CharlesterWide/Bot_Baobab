@@ -474,6 +474,8 @@ var Pokedex = {
                             respuesta.data += "\n";
                         }
 
+                        respuesta.data += "\n";
+
                         respuesta.data += "Muy débil: ";
                         if (sdebil.length > 0) {
                             respuesta.data += sdebil.join() + "\n";
@@ -601,6 +603,8 @@ var Pokedex = {
                 } else {
                     respuesta.data += "\n";
                 }
+
+                respuesta.data += "\n";
 
                 respuesta.data += "Muy débil: ";
                 if (sdebil.length > 0) {
