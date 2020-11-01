@@ -65,7 +65,10 @@ var Profesor = function(msg) {
                     { text: "☢️Debilidades de tipo☢️", callback_data: "TIPO" },
                 ],
                 [
-                    { text: "⚾️Pokeballs⚾️", callback_data: "POKEBALLS" },
+                    { text: "⚾️Poké Balls⚾️", callback_data: "POKEBALLS" },
+                ],
+                [
+                    { text: "🛒Captura🛒", callback_data: "CAPTURA" },
                 ]
             ]
 
@@ -103,23 +106,31 @@ Baobab.on('message', function(msg) {
                         case 1:
                             Busca(msg);
                             npet = peticiones.indexOf(pet);
+                            peticiones.splice(npet, 1);
                             break;
                         case 2:
                             Stats(msg);
                             npet = peticiones.indexOf(pet);
+                            peticiones.splice(npet, 1);
                             break;
                         case 3:
                             Habilidades(msg);
                             npet = peticiones.indexOf(pet);
+                            peticiones.splice(npet, 1);
                             break;
                         case 4:
                             Debilidades(msg);
                             npet = peticiones.indexOf(pet);
+                            peticiones.splice(npet, 1);
+                            break;
+                        case 5:
+                            pet.pokemon = texto[0];
+                            console.log(pet);
+                            funpokeballs(msg);
                             break;
                     }
                 }
             })
-            peticiones.splice(npet, 1);
             break;
     }
 
@@ -569,6 +580,8 @@ var tipos = function(chatId) {
     });
 }
 
+
+
 /*#############################################################################################################
 
                              Pokeballs y captura
@@ -625,6 +638,43 @@ var funpokeballs = function(msg) {
 }
 
 
+Baobab.onText(/^\/Captura/, function(msg) {
+    console.log("Chat:" + msg.chat.id);
+    console.log("Usuario: " + msg.from.username);
+    console.log("Texto: " + msg.text.toString());
+    console.log(Date());
+    var chatId = msg.chat.id;
+    var texto = msg.text.toString().toLocaleLowerCase();
+    var msgId = msg.message_id;
+    Baobab.deleteMessage(chatId, msgId);
+    texto = texto.split(" ");
+
+    if (texto.length < 3) {
+        Baobab.sendMessage(chatId, "Hace falta introducir el nombre o número del Pokémon y el número de la Poké Ball que quieres usar");
+    } else {
+        Pokedex.Captura(texto[1], texto[2]).then(function(resolve) {
+            if (resolve.code == 'ok') {
+                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
+            } else {
+                mensaje = "Error al buscar a " + texto[1] + "\n Nombre mal introducido o pokemon no existente";
+                Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
+                console.log('There was an ERROR');
+            }
+        }).catch(function(err) {
+            console.log(err);
+            mensaje = "Error al buscar a " + texto[1] + "\n Nombre mal introducido o pokemon no existente";
+            Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
+        });
+    }
+
+
+})
+
+var funCaptura = function(msg) {
+
+}
+
+
 /*#############################################################################################################
 
                              CALLBACS DE LOS BOTONES
@@ -643,601 +693,460 @@ Baobab.on('callback_query', function(boton) {
 
     // Botones de las funciones
 
-    if (data == 'BUSCA') {
-        var peticion = {
-            id: chatId,
-            peticion: 1
-        };
-        peticiones.push(peticion);
-        Baobab.sendMessage(chatId, "¿Qué Pókemon buscas? \nPuedes usar su nombre o número nacional");
-    }
+    switch (data) {
 
-    if (data == 'STATS') {
-        var peticion = {
-            id: chatId,
-            peticion: 2
-        };
-        peticiones.push(peticion);
-        Baobab.sendMessage(chatId, "¿Qué Pókemon buscas? \nPuedes usar su nombre o número nacional");
-    }
+        /**********
+         * 
+         *  Botones de llamadas principales
+         * 
+         **********/
+        case 'BUSCA':
+            var peticion = {
+                id: chatId,
+                peticion: 1
+            };
+            peticiones.push(peticion);
+            Baobab.sendMessage(chatId, "¿Qué Pókemon buscas? \nPuedes usar su nombre o número nacional");
+            break;
+        case 'STATS':
+            var peticion = {
+                id: chatId,
+                peticion: 2
+            };
+            peticiones.push(peticion);
+            Baobab.sendMessage(chatId, "¿Qué Pókemon buscas? \nPuedes usar su nombre o número nacional");
+            break;
+        case 'RANDOM':
+            Baobab.sendMessage(chatId, "Y el Pókemon random es...");
+            Random(msg);
+            break;
+        case 'HABILIDAD':
+            var peticion = {
+                id: chatId,
+                peticion: 3
+            };
+            peticiones.push(peticion);
+            Baobab.sendMessage(chatId, "¿Qué habiliad buscas? \nPuedes usar su nombre o número nacional");
+            break;
+        case 'DEBILIDAD':
+            var peticion = {
+                id: chatId,
+                peticion: 4
+            };
+            peticiones.push(peticion);
+            Baobab.sendMessage(chatId, "¿De qué Pókemon quieres saber las debilidades? \nPuedes usar su nombre o número nacional");
+            break;
+        case 'TIPO':
+            funtipos(msg);
+            break;
+        case 'POKEBALLS':
+            funpokeballs(msg);
+            break;
+        case 'CAPTURA':
+            var peticion = {
+                id: chatId,
+                peticion: 5,
+                pokemon: 0
+            };
+            peticiones.push(peticion);
+            Baobab.sendMessage(chatId, "¿Qué Pokémon quieres capturar? \nPuedes usar su nombre o número nacional");
+            break;
 
 
-    if (data == 'RANDOM') {
-        Baobab.sendMessage(chatId, "Y el Pókemon random es...");
-        Random(msg);
-    }
-
-    if (data == 'HABILIDAD') {
-        var peticion = {
-            id: chatId,
-            peticion: 3
-        };
-        peticiones.push(peticion);
-        Baobab.sendMessage(chatId, "¿Qué habiliad buscas? \nPuedes usar su nombre o número nacional");
-    }
-
-    if (data == 'DEBILIDAD') {
-        var peticion = {
-            id: chatId,
-            peticion: 4
-        };
-        peticiones.push(peticion);
-        Baobab.sendMessage(chatId, "¿De qué Pókemon quieres saber las debilidades? \nPuedes usar su nombre o número nacional");
-    }
-
-    if (data == 'TIPO') {
-        funtipos(msg);
-    }
-
-    if (data == 'POKEBALLS') {
-        funpokeballs(msg);
-    }
-
-    console.log(peticiones);
-    /*BUSCA,STATS,RANDOM,HABILIDAD,DEBILIDAD,TIPO*/
-
-    //    Botones para la funcion de tipos
-
-
-    if (data == 'UNTIPO') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.n = 1;
-            }
-        });
-        tipos(chatId);
-    };
-
-    if (data == 'DOSTIPOS') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.n = 2;
-            }
-        });
-        tipos(chatId);
-    };
-
-    if (data == 'ACERO') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Acero');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            /*****
+             * 
+             *  Botones de los tipos
+             * 
+             ****/
+        case 'UNTIPO':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.n = 1;
                 }
-            }
-        });
-    }
-
-    if (data == 'AGUA') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Agua');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            tipos(chatId);
+            break;
+        case 'DOSTIPOS':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.n = 2;
                 }
-            }
-        });
-    }
-
-    if (data == 'BICHO') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Bicho');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            tipos(chatId);
+            break;
+        case 'ACERO':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Acero');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'DRAGON') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Dragón');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'AGUA':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Agua');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'ELECTRICO') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Eléctrico');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'BICHO':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Bicho');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'FANTASMA') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Fantasma');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'DRAGON':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Dragón');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'FUEGO') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Fuego');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'ELECTRICO':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Eléctrico');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'HADA') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Hada');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'FANTASMA':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Fantasma');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'HIELO') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Hielo');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'FUEGO':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Fuego');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'LUCHA') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Lucha');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'HADA':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Hada');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'NORMAL') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Normal');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'HIELO':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Hielo');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'PLANTA') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Planta');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'LUCHA':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Lucha');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'PSIQUICO') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Psíquico');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'NORMAL':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Normal');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'ROCA') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Roca');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'PLANTA':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Planta');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'SINIESTRO') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Siniestro');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'PSIQUICO':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Psíquico');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'TIERRA') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Tierra');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'ROCA':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Roca');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'VENENO') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Veneno');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'SINIESTRO':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Siniestro');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-
-    if (data == 'VOLADOR') {
-        peticionTipos.forEach(function(peticion) {
-            if (peticion.id == chatId) {
-                peticion.t.push('Volador');
-                if (peticion.t.length != peticion.n) {
-                    tipos(chatId);
-                } else {
-                    Pokedex.Tipos(peticion.t).then(function(resolve) {
-                        if (resolve.code == 'ok') {
-                            Baobab.sendMessage(chatId, resolve.data);
-                            limpiar(chatId);
-                        }
-                    })
+            });
+            break;
+        case 'TIERRA':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Tierra');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
                 }
-            }
-        });
-    }
-    /* 'Acero', 'Agua', 'Bicho', 'Dragón', 'Eléctrico', 'Fantasma', 'Fuego', 'Hada', 'Hielo', 'Lucha', 'Normal', 'Planta', 'Psíquico', 'Roca', 'Siniestro', 'Tierra', 'Veneno', 'Volador'*/
+            });
+            break;
+        case 'VENENO':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Veneno');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
+                }
+            });
+            break;
+        case 'VOLADOR':
+            peticionTipos.forEach(function(peticion) {
+                if (peticion.id == chatId) {
+                    peticion.t.push('Volador');
+                    if (peticion.t.length != peticion.n) {
+                        tipos(chatId);
+                    } else {
+                        Pokedex.Tipos(peticion.t).then(function(resolve) {
+                            if (resolve.code == 'ok') {
+                                Baobab.sendMessage(chatId, resolve.data);
+                                limpiar(chatId);
+                            }
+                        })
+                    }
+                }
+            });
+            break;
 
 
-    if (data == "POKE") {
-        Pokedex.Pokeballs(0).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "SUPER") {
-        Pokedex.Pokeballs(1).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "ULTRA") {
-        Pokedex.Pokeballs(2).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "MASTER") {
-        Pokedex.Pokeballs(3).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "MALLA") {
-        Pokedex.Pokeballs(4).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "NIDO") {
-        Pokedex.Pokeballs(5).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "BUCEO") {
-        Pokedex.Pokeballs(6).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "ACOPIO") {
-        Pokedex.Pokeballs(7).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "TURNO") {
-        Pokedex.Pokeballs(8).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "VELOZ") {
-        Pokedex.Pokeballs(9).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "OCAS") {
-        Pokedex.Pokeballs(10).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "RAPID") {
-        Pokedex.Pokeballs(11).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "NIVEL") {
-        Pokedex.Pokeballs(12).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "AMOR") {
-        Pokedex.Pokeballs(13).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "CEBO") {
-        Pokedex.Pokeballs(14).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "LUNA") {
-        Pokedex.Pokeballs(15).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "HONOR") {
-        Pokedex.Pokeballs(16).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "LUJO") {
-        Pokedex.Pokeballs(17).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "SANA") {
-        Pokedex.Pokeballs(18).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-    if (data == "GLORI") {
-        Pokedex.Pokeballs(19).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
+            /******
+             * 
+             *  Pokeballs
+             * 
+             */
 
-    if (data == "ENSU") {
-        Pokedex.Pokeballs(20).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
+        case 'POKE':
+        case 'SUPER':
+        case 'ULTRA':
+        case 'MASTER':
+        case 'MALLA':
+        case 'NIDO':
+        case 'BUCEO':
+        case 'ACOPIO':
+        case 'TURNO':
+        case 'VELOZ':
+        case 'OCAS':
+        case "RAPID":
+        case "NIVEL":
+        case "AMOR":
+        case "CEBO":
+        case "LUNA":
+        case "HONOR":
+        case "LUJO":
+        case "SANA":
+        case "GLORI":
+        case "ENSU":
+        case "SAFA":
+        case "PESO":
+        case "ENTE":
+            var cap = false;
+            var npet = 0;
+            peticiones.forEach(function(pet) {
+                if (pet.id == chatId) {
+                    if (pet.peticion == 5) {
+                        cap = true;
+                        npet = peticiones.indexOf(pet);
+                    }
+                }
+            })
+            if (!cap) {
+                Pokedex.Pokeballs(data).then(function(resolve) {
+                    if (resolve.code == 'ok') {
+                        Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
+                    }
+                })
+            } else {
+                Pokedex.Captura(data, peticiones[npet].pokemon).then(function(resolve) {
+                    if (resolve.code == 'ok') {
+                        Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
+                        peticiones.splice(npet, 1);
+                    } else {
+                        mensaje = "Error al buscar a " + peticiones[npet].pokemon + "\n Nombre mal introducido o pokemon no existente";
+                        Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
+                        console.log('There was an ERROR');
+                        peticiones.splice(npet, 1);
+                    }
+                }).catch(function(err) {
+                    console.log(err);
+                    mensaje = "Error al buscar a " + peticiones[npet].pokemon + "\n Nombre mal introducido o pokemon no existente";
+                    Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
+                    peticiones.splice(npet, 1);
+                });
             }
-        })
-    }
-
-    if (data == "SAFA") {
-        Pokedex.Pokeballs(21).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-
-    if (data == "PESO") {
-        Pokedex.Pokeballs(22).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
-    }
-
-    if (data == "ENTE") {
-        Pokedex.Pokeballs(23).then(function(resolve) {
-            if (resolve.code == 'ok') {
-                Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
-                limpiar(chatId);
-            }
-        })
+            break;
     }
 
 });

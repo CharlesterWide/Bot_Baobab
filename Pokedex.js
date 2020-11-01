@@ -10,30 +10,30 @@ const tipos = {
 
 /* Nombre  Ratio  Imagen ValorExtra RatioEX */
 const pokeballs = [
-    ['PokeBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Poké-Ball.png', 'N', 1],
-    ['SuperBall', 1.5, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Super-Ball.png', 'N', 1],
-    ['UltraBall', 2, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Ultra-Ball.png', 'N', 1],
-    ['MasterBall', 100, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Master-Ball.png', 'N', 1],
-    ['MallaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Malla-Ball.png', 'Si el Pokémon es agua o bicho', 3.5],
-    ['NidoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Nido-Ball.png', 'Si el nivel del Pókemon es menor de 30 la captura es máx de', 4],
-    ['BuceoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Buceo-Ball.png', 'Si el Pókemon está sobre o bajo el agua', 3.5],
-    ['AcopioBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Acopio-Ball.png', 'Si el Pókemon está registrado como capturado en la Pokédex', 3.5],
-    ['TurnoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Turno-Ball.png', 'Si el combate supera el turno 29', 4],
-    ['VelozBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Veloz-Ball.png', 'Si es el primer turno de combate', 5],
-    ['OcasoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Ocaso-Ball.png', 'Si el Pókemon está en una cueva o es de noche', 3],
-    ['RapidBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Rapid-Ball.png', 'Si la velocidad base del Pókemon es 100 o más', 4],
-    ['NivelBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Nivel-Ball.png', 'Si el nivel del Pókemon es 4 veces menor al del propio Pókemon', 8],
-    ['AmorBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Amor-Ball.png', 'Si el Pókemon es de género opuesto y misma especie que el tuyo', 8],
-    ['CeboBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Cebo-Ball.png', 'Pescando', 5],
-    ['LunaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Luna-Ball-1.png', 'Si el Pókemon pertenece a la familia de Pókemon a una que evoluciona con piedra lunar', 4],
-    ['HonorBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Honor-Ball.png', 'N', 1],
-    ['LujoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Lujo-Ball.png', 'N', 1],
-    ['SanaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Sana-Ball.png', 'N', 1],
-    ['GloriaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Gloria-Ball.png', 'N', 1],
-    ['EnsueñoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Ensueño-Ball.png', 'N', 1],
-    ['SafariBall', 1.5, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Safari-Ball.png', 'N', 1],
-    ['PesoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Peso-Ball.png', 'Si el Pókemon pesa más de 300 kg', 5],
-    ['EnteBall', 0.1, 'https://pokemonalpha.xyz/wp-content/uploads/Ente-Ball.png', 'Si se trata de un Ultraente', 5]
+    ['PokeBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Poké-Ball.png', 'N', 1, 'POKE'],
+    ['SuperBall', 1.5, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Super-Ball.png', 'N', 1, 'SUPER'],
+    ['UltraBall', 2, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Ultra-Ball.png', 'N', 1, 'ULTRA'],
+    ['MasterBall', 100, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Master-Ball.png', 'N', 1, 'MASTER'],
+    ['MallaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Malla-Ball.png', 'Si el Pokémon es agua o bicho', 3.5, 'MALLA'],
+    ['NidoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Nido-Ball.png', 'Si el nivel del Pókemon es menor de 30 la captura es máx de', 4, 'NIDO'],
+    ['BuceoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Buceo-Ball.png', 'Si el Pókemon está sobre o bajo el agua', 3.5, 'BUCEO'],
+    ['AcopioBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Acopio-Ball.png', 'Si el Pókemon está registrado como capturado en la Pokédex', 3.5, 'ACOPIO'],
+    ['TurnoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Turno-Ball.png', 'Si el combate supera el turno 29', 4, 'TURNO'],
+    ['VelozBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Veloz-Ball.png', 'Si es el primer turno de combate', 5, 'VELOZ'],
+    ['OcasoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Ocaso-Ball.png', 'Si el Pókemon está en una cueva o es de noche', 3, 'OCAS'],
+    ['RapidBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Rapid-Ball.png', 'Si la velocidad base del Pókemon es 100 o más', 4, 'RAPID'],
+    ['NivelBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Nivel-Ball.png', 'Si el nivel del Pókemon es 4 veces menor al del propio Pókemon', 8, 'NIVEL'],
+    ['AmorBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Amor-Ball.png', 'Si el Pókemon es de género opuesto y misma especie que el tuyo', 8, 'AMOR'],
+    ['CeboBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Cebo-Ball.png', 'Pescando', 5, 'CEBO'],
+    ['LunaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Luna-Ball-1.png', 'Si el Pókemon pertenece a la familia de Pókemon a una que evoluciona con piedra lunar', 4, 'LUNA'],
+    ['HonorBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Honor-Ball.png', 'N', 1, 'HONOR'],
+    ['LujoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Lujo-Ball.png', 'N', 1, 'LUJO'],
+    ['SanaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Sana-Ball.png', 'N', 1, 'SANA'],
+    ['GloriaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Gloria-Ball.png', 'N', 1, 'GLORI'],
+    ['EnsueñoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Ensueño-Ball.png', 'N', 1, 'ENSU'],
+    ['SafariBall', 1.5, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Safari-Ball.png', 'N', 1, 'SAFA'],
+    ['PesoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Peso-Ball.png', 'Si el Pókemon pesa más de 300 kg', 5, 'PESO'],
+    ['EnteBall', 0.1, 'https://pokemonalpha.xyz/wp-content/uploads/Ente-Ball.png', 'Si se trata de un Ultraente', 5, 'ENTE']
 ]
 
 const danelement = [
@@ -257,7 +257,8 @@ var Pokedex = {
                         "Att. Especial: " + special_a + "\n" +
                         "Deff. Especial: " + special_d + "\n" +
                         "Velocidad: " + speed + "\n";
-                    console.log(stat);
+
+
                     if (response.abilities.length > 0) {
 
                         Pokedex.Habilidad(response.abilities[0].ability.name).then(function(res) {
@@ -273,7 +274,6 @@ var Pokedex = {
                                             respuesta.data += "\n";
 
                                             respuesta.data += stat;
-
 
                                             respuesta.code = 'ok';
                                             resolve(respuesta);
@@ -300,7 +300,6 @@ var Pokedex = {
 
                                 respuesta.data += stat;
 
-
                                 respuesta.code = 'ok';
                                 resolve(respuesta);
                                 console.log(respuesta);
@@ -314,7 +313,6 @@ var Pokedex = {
                         respuesta.data += "Puede que las habilidades de este pokemon no estén en la base de datos toadvía, ten paciencia\n\n";
 
                         respuesta.data += stat;
-
 
                         respuesta.code = 'ok';
                         resolve(respuesta);
@@ -653,12 +651,18 @@ var Pokedex = {
                                Ratios de captura
 
  ###############################################################################################################*/
-    Pokeballs: function(numero) {
+    Pokeballs: function(codigo) {
         var respuesta = { code: 'ko', data: '', img: '' };
+        var numero = 0;
         var promise = new Promise(function(resolve, reject) {
             setTimeout(function() {
+                pokeballs.forEach(function(pk) {
+                    if (codigo == pk[5]) {
+                        numero = pokeballs.indexOf(pk);
+                    }
+                })
                 respuesta.code = 'ok';
-                respuesta.data += "Pokeball escogida: ";
+                respuesta.data += "Poké Ball escogida: ";
                 respuesta.data += pokeballs[numero][0];
                 respuesta.data += "\n";
                 respuesta.data += "Ratio de captura estandar: " + pokeballs[numero][1] + "\n";
@@ -668,6 +672,120 @@ var Pokedex = {
                 respuesta.img = pokeballs[numero][2];
                 resolve(respuesta);
                 console.log(respuesta);
+            }, 2000)
+        });
+        return promise;
+    },
+
+    Captura: function(codigo, pokemon) {
+        var respuesta = { code: 'ko', data: '', img: '' };
+        var capN, capDor, capPar, capPN, capPDor, capPPar;
+        var PN, PDor, PPar, PPN, PPDor, PPPar;
+        var promise = new Promise(function(resolve, reject) {
+            setTimeout(function() {
+                pokeballs.forEach(function(pk) {
+                    if (codigo == pk[5]) {
+                        pokeball = pokeballs.indexOf(pk);
+                    }
+                })
+                Pkd.getPokemonSpeciesByName(pokemon).then(function(response) {
+                    respuesta.data += "Esta es la probabilidad aproximada de captura del Pokémon suponiendo que tiene un 1% de su vida y todo en base a estimaciones, no tomes el valor obtenido como algo fiable al 100%\n\n";
+                    respuesta.data += "Pokémon: " + response.name + "\nRatio de captura: " + response.capture_rate + "\n";
+                    respuesta.data += "Poké Ball escogida: " + pokeballs[pokeball][0] + "\n";
+                    respuesta.data += "Probabilidad de captura:\n";
+
+                    capN = ((298 * response.capture_rate * pokeballs[pokeball][1]) / 300);
+                    capPar = ((298 * response.capture_rate * pokeballs[pokeball][1]) / 300) * 1.5;
+                    capDor = ((298 * response.capture_rate * pokeballs[pokeball][1]) / 300) * 2.5;
+                    if (capN > 255) {
+                        respuesta.data += "Condiciones normales: Captura asegurada\n";
+                    } else {
+                        PN = 255 / capN;
+                        PN = Math.pow(PN, 3 / 16);
+                        PN = 65536 / PN;
+                        PN = PN / 65536;
+                        PN = PN * 100;
+                        PN = Math.trunc(PN);
+                        respuesta.data += "Condiciones normales: " + PN + "%\n";
+                    }
+
+                    if (capPar > 255) {
+                        respuesta.data += "Paralizado, envenenado o quemado: Captura asegurada\n";
+                    } else {
+                        PPar = 255 / capPar;
+                        PPar = Math.pow(PPar, 3 / 16);
+                        PPar = 65536 / PPar;
+                        PPar = PPar / 65536;
+                        PPar = PPar * 100;
+                        PPar = Math.trunc(PPar);
+                        respuesta.data += "Paralizado, envenenao o quemado: " + PPar + "%\n";
+                    }
+
+                    if (capDor > 255) {
+                        respuesta.data += "Dormido o congelado: Captura asegurada\n";
+                    } else {
+                        PDor = 255 / capDor;
+                        PDor = Math.pow(PDor, 3 / 16);
+                        PDor = 65536 / PDor;
+                        PDor = PDor / 65536;
+                        PDor = PDor * 100;
+                        PDor = Math.trunc(PDor);
+                        respuesta.data += "Dormido o congelado:" + PDor + "%\n";
+                    }
+
+                    if (pokeballs[pokeball][3] != 'N') {
+
+                        respuesta.data += "\n";
+                        respuesta.data += pokeballs[pokeball][3] + "\n";
+
+                        capPN = ((298 * response.capture_rate * pokeballs[pokeball][4]) / 300);
+                        capPPar = ((298 * response.capture_rate * pokeballs[pokeball][4]) / 300) * 1.5;
+                        capPDor = ((298 * response.capture_rate * pokeballs[pokeball][4]) / 300) * 2.5;
+                        if (capPN > 255) {
+                            respuesta.data += "Condiciones normales: Captura asegurada\n";
+                        } else {
+                            PPN = 255 / capPN;
+                            PPN = Math.pow(PPN, 3 / 16);
+                            PPN = 65536 / PPN;
+                            PPN = PPN / 65536;
+                            PPN = PPN * 100;
+                            PPN = Math.trunc(PPN);
+                            respuesta.data += "Condiciones normales: " + PPN + "%\n";
+                        }
+
+                        if (capPPar > 255) {
+                            respuesta.data += "Paralizado, envenenado o quemado: Captura asegurada\n";
+                        } else {
+                            PPPar = 255 / capPPar;
+                            PPPar = Math.pow(PPPar, 3 / 16);
+                            PPPar = 65536 / PPPar;
+                            PPPar = PPPar / 65536;
+                            PPPar = PPPar * 100;
+                            PPPar = Math.trunc(PPPar);
+                            respuesta.data += "Paralizado, envenenao o quemado: " + PPPar + "%\n";
+                        }
+
+                        if (capPDor > 255) {
+                            respuesta.data += "Dormido o congelado: Captura asegurada\n";
+                        } else {
+                            PPDor = 255 / capPDor;
+                            PPDor = Math.pow(PPDor, 3 / 16);
+                            PPDor = 65536 / PPDor;
+                            PPDor = PPDor / 65536;
+                            PPDor = PPDor * 100;
+                            PPDor = Math.trunc(PPDor);
+                            respuesta.data += "Dormido o congelado:" + PPDor + "%\n";
+                        }
+                    }
+
+                    respuesta.img = pokeballs[pokeball][2];
+                    respuesta.code = 'ok';
+                    resolve(respuesta);
+                    console.log(respuesta);
+                }).catch(function(error) {
+                    console.log(error);
+                    reject(respuesta);
+                });
             }, 2000)
         });
         return promise;
