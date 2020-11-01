@@ -681,7 +681,7 @@ var Pokedex = {
         return promise;
     },
 
-    Captura: function(codigo, pokemon) {
+    Captura: function(codigo, pokemon, porcent) {
         var respuesta = { code: 'ko', data: '', img: '' };
         var capN, capDor, capPar, capPN, capPDor, capPPar;
         var PN, PDor, PPar, PPN, PPDor, PPPar;
@@ -693,14 +693,14 @@ var Pokedex = {
                     }
                 })
                 Pkd.getPokemonSpeciesByName(pokemon).then(function(response) {
-                    respuesta.data += "Esta es la probabilidad aproximada de captura del Pokémon suponiendo que tiene un 1% de su vida y todo en base a estimaciones, no tomes el valor obtenido como algo fiable al 100%\n\n";
+                    respuesta.data += "Esta es la probabilidad aproximada de captura del Pokémon suponiendo que tiene un " + porcent + "% de su vida y todo en base a estimaciones, no tomes el valor obtenido como algo fiable al 100%\n\n";
                     respuesta.data += "Pokémon: " + response.name + "\nRatio de captura: " + response.capture_rate + "\n";
                     respuesta.data += "Poké Ball escogida: " + pokeballs[pokeball][0] + "\n";
                     respuesta.data += "Probabilidad de captura:\n";
 
-                    capN = ((298 * response.capture_rate * pokeballs[pokeball][1]) / 300);
-                    capPar = ((298 * response.capture_rate * pokeballs[pokeball][1]) / 300) * 1.5;
-                    capDor = ((298 * response.capture_rate * pokeballs[pokeball][1]) / 300) * 2.5;
+                    capN = (((300 - porcent * 2) * response.capture_rate * pokeballs[pokeball][1]) / 300);
+                    capPar = (((300 - porcent * 2) * response.capture_rate * pokeballs[pokeball][1]) / 300) * 1.5;
+                    capDor = (((300 - porcent * 2) * response.capture_rate * pokeballs[pokeball][1]) / 300) * 2.5;
                     if (capN > 255) {
                         respuesta.data += "Condiciones normales: Captura asegurada\n";
                     } else {
@@ -742,9 +742,9 @@ var Pokedex = {
                         respuesta.data += "\n";
                         respuesta.data += pokeballs[pokeball][3] + "\n";
 
-                        capPN = ((298 * response.capture_rate * pokeballs[pokeball][4]) / 300);
-                        capPPar = ((298 * response.capture_rate * pokeballs[pokeball][4]) / 300) * 1.5;
-                        capPDor = ((298 * response.capture_rate * pokeballs[pokeball][4]) / 300) * 2.5;
+                        capPN = (((300 - porcent * 2) * response.capture_rate * pokeballs[pokeball][4]) / 300);
+                        capPPar = (((300 - porcent * 2) * response.capture_rate * pokeballs[pokeball][4]) / 300) * 1.5;
+                        capPDor = (((300 - porcent * 2) * response.capture_rate * pokeballs[pokeball][4]) / 300) * 2.5;
                         if (capPN > 255) {
                             respuesta.data += "Condiciones normales: Captura asegurada\n";
                         } else {

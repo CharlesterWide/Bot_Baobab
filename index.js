@@ -125,8 +125,7 @@ Baobab.on('message', function(msg) {
                             break;
                         case 5:
                             pet.pokemon = texto[0];
-                            console.log(pet);
-                            funpokeballs(msg);
+                            funCaptura(msg);
                             break;
                     }
                 }
@@ -675,6 +674,21 @@ Baobab.onText(/^\/Captura/, function(msg) {
 })
 
 var funCaptura = function(msg) {
+    var chatId = msg.chat.id;
+    var msgId = msg.message_id;
+    Baobab.sendMessage(chatId, "¿Qué porcentaje de vida tiene el Pokémon?", {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: "1%", callback_data: '1' },
+                    { text: "25%", callback_data: '25' },
+                    { text: "50%", callback_data: '50' },
+                    { text: "75%", callback_data: '75' },
+                    { text: "100%", callback_data: '100' }
+                ]
+            ]
+        }
+    })
 
 }
 
@@ -750,7 +764,8 @@ Baobab.on('callback_query', function(boton) {
             var peticion = {
                 id: chatId,
                 peticion: 5,
-                pokemon: 0
+                pokemon: 0,
+                porcent: 1
             };
             peticiones.push(peticion);
             Baobab.sendMessage(chatId, "¿Qué Pokémon quieres capturar? \nPuedes usar su nombre o número nacional");
@@ -862,7 +877,7 @@ Baobab.on('callback_query', function(boton) {
                     }
                 })
             } else {
-                Pokedex.Captura(data, peticiones[npet].pokemon).then(function(resolve) {
+                Pokedex.Captura(data, peticiones[npet].pokemon, peticiones[npet].porcent).then(function(resolve) {
                     if (resolve.code == 'ok') {
                         Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
                         peticiones.splice(npet, 1);
@@ -880,6 +895,29 @@ Baobab.on('callback_query', function(boton) {
                 });
             }
             break;
+
+            /***
+             * 
+             *  Captura
+             * 
+             */
+        case '1':
+        case '25':
+        case '50':
+        case '75':
+        case '100':
+            var npet = 0;
+            peticiones.forEach(function(pet) {
+                if (pet.id == chatId) {
+                    if (pet.peticion == 5) {
+                        npet = peticiones.indexOf(pet);
+                    }
+                }
+            })
+            peticiones[npet].porcent = parseInt(data, 10);
+            funpokeballs(msg);
+            break;
+
     }
 
 });
