@@ -15,24 +15,24 @@ const pokeballs = [
     ['UltraBall', 2, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Ultra-Ball.png', 'N', 1, 'ULTRA'],
     ['MasterBall', 100, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Master-Ball.png', 'N', 1, 'MASTER'],
     ['MallaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Malla-Ball.png', 'Si el Pokémon es agua o bicho', 3.5, 'MALLA'],
-    ['NidoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Nido-Ball.png', 'Si el nivel del Pókemon es menor de 30 la captura es máx de', 4, 'NIDO'],
-    ['BuceoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Buceo-Ball.png', 'Si el Pókemon está sobre o bajo el agua', 3.5, 'BUCEO'],
-    ['AcopioBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Acopio-Ball.png', 'Si el Pókemon está registrado como capturado en la Pokédex', 3.5, 'ACOPIO'],
+    ['NidoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Nido-Ball.png', 'Si el nivel del Pokémon es menor de 30 la captura es máx de', 4, 'NIDO'],
+    ['BuceoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Buceo-Ball.png', 'Si el Pokémon está sobre o bajo el agua', 3.5, 'BUCEO'],
+    ['AcopioBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Acopio-Ball.png', 'Si el Pokémon está registrado como capturado en la Pokédex', 3.5, 'ACOPIO'],
     ['TurnoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Turno-Ball.png', 'Si el combate supera el turno 29', 4, 'TURNO'],
     ['VelozBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Veloz-Ball.png', 'Si es el primer turno de combate', 5, 'VELOZ'],
-    ['OcasoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Ocaso-Ball.png', 'Si el Pókemon está en una cueva o es de noche', 3, 'OCAS'],
-    ['RapidBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Rapid-Ball.png', 'Si la velocidad base del Pókemon es 100 o más', 4, 'RAPID'],
-    ['NivelBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Nivel-Ball.png', 'Si el nivel del Pókemon es 4 veces menor al del propio Pókemon', 8, 'NIVEL'],
-    ['AmorBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Amor-Ball.png', 'Si el Pókemon es de género opuesto y misma especie que el tuyo', 8, 'AMOR'],
+    ['OcasoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Ocaso-Ball.png', 'Si el Pokémon está en una cueva o es de noche', 3, 'OCAS'],
+    ['RapidBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Rapid-Ball.png', 'Si la velocidad base del Pokémon es 100 o más', 4, 'RAPID'],
+    ['NivelBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Nivel-Ball.png', 'Si el nivel del Pokémon es 4 veces menor al del propio Pokémon', 8, 'NIVEL'],
+    ['AmorBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Amor-Ball.png', 'Si el Pokémon es de género opuesto y misma especie que el tuyo', 8, 'AMOR'],
     ['CeboBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Cebo-Ball.png', 'Pescando', 5, 'CEBO'],
-    ['LunaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Luna-Ball-1.png', 'Si el Pókemon pertenece a la familia de Pókemon a una que evoluciona con piedra lunar', 4, 'LUNA'],
+    ['LunaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Luna-Ball-1.png', 'Si el Pokémon pertenece a la familia de Pokémon a una que evoluciona con piedra lunar', 4, 'LUNA'],
     ['HonorBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Honor-Ball.png', 'N', 1, 'HONOR'],
     ['LujoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Lujo-Ball.png', 'N', 1, 'LUJO'],
     ['SanaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Sana-Ball.png', 'N', 1, 'SANA'],
     ['GloriaBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Gloria-Ball.png', 'N', 1, 'GLORI'],
     ['EnsueñoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Ensueño-Ball.png', 'N', 1, 'ENSU'],
     ['SafariBall', 1.5, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Safari-Ball.png', 'N', 1, 'SAFA'],
-    ['PesoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Peso-Ball.png', 'Si el Pókemon pesa más de 300 kg', 5, 'PESO'],
+    ['PesoBall', 1, 'https://pokemonalpha.xyz/wp-content/uploads/2016/06/Peso-Ball.png', 'Si el Pokémon pesa más de 300 kg', 5, 'PESO'],
     ['EnteBall', 0.1, 'https://pokemonalpha.xyz/wp-content/uploads/Ente-Ball.png', 'Si se trata de un Ultraente', 5, 'ENTE']
 ]
 
@@ -310,7 +310,7 @@ var Pokedex = {
                         });
 
                     } else {
-                        respuesta.data += "Puede que las habilidades de este pokemon no estén en la base de datos toadvía, ten paciencia\n\n";
+                        respuesta.data += "Puede que las habilidades de este pokémon no estén en la base de datos toadvía, ten paciencia\n\n";
 
                         respuesta.data += stat;
 
@@ -444,7 +444,7 @@ var Pokedex = {
                             }
                         }
 
-                        respuesta.data = "Pokemon: " + response.name + "\n";
+                        respuesta.data = "Pokémon: " + response.name + "\n";
 
                         if (tip.length > 1) {
                             respuesta.data += "Tipos: ";

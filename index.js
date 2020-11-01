@@ -25,7 +25,7 @@ Baobab.onText(/^\/start/, function(msg) {
     var msgId = msg.message_id;
     Baobab.deleteMessage(chatId, msgId);
 
-    Baobab.sendMessage(chatId, "Hola, " + username + " soy el Profesor Baobab \n Un experto en Pokemon" +
+    Baobab.sendMessage(chatId, "Hola, " + username + " soy el Profesor Baobab \n Un experto en Pokémon" +
         "\n Para hablar conmigo simplemente escribe \"Profesor\" o \"Baobab\"");
 });
 
@@ -43,14 +43,14 @@ var peticiones = [];
 //Función principal de respuesta
 
 var Profesor = function(msg) {
-    Baobab.sendMessage(msg.chat.id, "¿En qué puedo ayudarte", {
+    Baobab.sendMessage(msg.chat.id, "¿En qué puedo ayudarte?", {
         reply_markup: {
             inline_keyboard: [
                 [
-                    { text: "🔍Busqueda Pókemon🔍", callback_data: "BUSCA" },
+                    { text: "🔍Busqueda Pokémon🔍", callback_data: "BUSCA" },
                 ],
                 [
-                    { text: "📊Estadísticas de Pókemon📊", callback_data: "STATS" },
+                    { text: "📊Estadísticas de Pokémon📊", callback_data: "STATS" },
                 ],
                 [
                     { text: "🌌Random🌌", callback_data: "RANDOM" },
@@ -59,7 +59,7 @@ var Profesor = function(msg) {
                     { text: "🏋‍♂Describir habilidad🏋‍♂", callback_data: "HABILIDAD" },
                 ],
                 [
-                    { text: "☠Debilidades de Pókemon☠", callback_data: "DEBILIDAD" },
+                    { text: "☠Debilidades de Pokémon☠", callback_data: "DEBILIDAD" },
                 ],
                 [
                     { text: "☢️Debilidades de tipo☢️", callback_data: "TIPO" },
@@ -96,7 +96,7 @@ Baobab.on('message', function(msg) {
         case "titan":
         case "grande":
         case "pokemon":
-        case "pókemon":
+        case "pokémon":
             Profesor(msg);
             break;
         default:
@@ -154,11 +154,11 @@ Baobab.onText(/^\/help/, function(msg) {
     Baobab.sendMessage(chatId, "Ahora mismo estoy trabajando para ofrecerte más servicios" +
         "\nPrueba a escribit Profesor o Baobab directamente para la nueva interfaz" +
         "\nComandos disponibles: " +
-        "\n\n/Pokemon Nombre o número del Pokemon para que te de la inforación de un Pokemon" +
-        "\n\n/Random para ver un Pokemon de manera aleatoria" +
+        "\n\n/Pokémon Nombre o número del Pokémon para que te de la inforación de un Pokémon" +
+        "\n\n/Random para ver un Pokémon de manera aleatoria" +
         "\n\n/Habilidad número de la habilidad o nombre en inglés para ver la información de la habilidad" +
-        "\n\n/Stats Nombre o número del Pokemon para ver su información completa" +
-        "\n\n/Debilidades Nombre o número del Pokemon para ver sus resistencias elementales" +
+        "\n\n/Stats Nombre o número del Pokémon para ver su información completa" +
+        "\n\n/Debilidades Nombre o número del Pokémon para ver sus resistencias elementales" +
         "\n\n/Tipos y se abrirá el selector de tipos para ver sus resistencias elementales");
 });
 
@@ -182,22 +182,22 @@ Baobab.onText(/^\/Pokemon/, function(msg) {
     Baobab.deleteMessage(chatId, msgId);
     texto = texto.split(" ");
     if (texto.length < 2) {
-        Baobab.sendMessage(chatId, "Hace falta meter el nombre o número del Pokemon junto al comando");
+        Baobab.sendMessage(chatId, "Hace falta meter el nombre o número del Pokémon junto al comando");
     } else {
         var pokemon = texto[1];
 
-        console.log("Pokemon a buscar: " + pokemon);
+        console.log("Pokémon a buscar: " + pokemon);
 
         Pokedex.BuscaPokemon(pokemon).then(function(resolve) {
             if (resolve.code == 'ok') {
                 Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
             } else {
-                mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+                mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
                 Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
                 console.log('There was an ERROR');
             }
         }).catch(function(err) {
-            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
             Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
         });
     }
@@ -212,18 +212,18 @@ var Busca = function(msg) {
     Baobab.deleteMessage(chatId, msgId);
     var pokemon = texto[0];
 
-    console.log("Pokemon a buscar: " + pokemon);
+    console.log("Pokémon a buscar: " + pokemon);
 
     Pokedex.BuscaPokemon(pokemon).then(function(resolve) {
         if (resolve.code == 'ok') {
             Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
         } else {
-            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
             Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
             console.log('There was an ERROR');
         }
     }).catch(function(err) {
-        mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+        mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
         Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
     });
 
@@ -251,7 +251,7 @@ Baobab.onText(/^\/Random/, function(msg) {
         }
     }).catch(function(err) {
         console.log(err);
-        mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+        mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
         Baobab.sendMessage(chatId, mensaje);
     });
 });
@@ -264,7 +264,7 @@ var Random = function(msg) {
         }
     }).catch(function(err) {
         console.log(err);
-        mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+        mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
         Baobab.sendMessage(chatId, mensaje);
     });
 }
@@ -297,13 +297,13 @@ Baobab.onText(/^\/Habilidad/, function(msg) {
                 Baobab.sendMessage(chatId, resolve.data);
                 console.log(resolve);
             } else {
-                mensaje = "Error al buscar la habilidad " + habilidad + "\n Nombre mal introducido o pokemon no existente";
+                mensaje = "Error al buscar la habilidad " + habilidad + "\n Nombre mal introducido o habilidad no existente";
                 Baobab.sendMessage(chatId, mensaje);
                 console.log('There was an ERROR');
             }
         }).catch(function(err) {
             console.log(err);
-            mensaje = "Error al buscar la habilidad " + habilidad + "\n Nombre mal introducido o pokemon no existente";
+            mensaje = "Error al buscar la habilidad " + habilidad + "\n Nombre mal introducido o habilidad no existente";
             Baobab.sendMessage(chatId, mensaje);
         });
     }
@@ -323,13 +323,13 @@ var Habilidades = function(msg) {
                 Baobab.sendMessage(chatId, resolve.data);
                 console.log(resolve);
             } else {
-                mensaje = "Error al buscar la habilidad " + habilidad + "\n Nombre mal introducido o pokemon no existente";
+                mensaje = "Error al buscar la habilidad " + habilidad + "\n Nombre mal introducido o habilidad no existente";
                 Baobab.sendMessage(chatId, mensaje);
                 console.log('There was an ERROR');
             }
         }).catch(function(err) {
             console.log(err);
-            mensaje = "Error al buscar la habilidad " + habilidad + "\n Nombre mal introducido o pokemon no existente";
+            mensaje = "Error al buscar la habilidad " + habilidad + "\n Nombre mal introducido o habilidad no existente";
             Baobab.sendMessage(chatId, mensaje);
         });
     }
@@ -354,19 +354,19 @@ Baobab.onText(/^\/Stats/, function(msg) {
     } else {
         var pokemon = texto[1];
 
-        console.log("Pokemon a buscar: " + pokemon);
+        console.log("Pokémon a buscar: " + pokemon);
 
         Pokedex.Stats(pokemon).then(function(resolve) {
             if (resolve.code == 'ok') {
                 Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
             } else {
-                mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+                mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
                 Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
                 console.log('There was an ERROR');
             }
         }).catch(function(err) {
             console.log(err);
-            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
             Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
         });
     }
@@ -382,19 +382,19 @@ var Stats = function(msg) {
 
     var pokemon = texto[0];
 
-    console.log("Pokemon a buscar: " + pokemon);
+    console.log("Pokémon a buscar: " + pokemon);
 
     Pokedex.Stats(pokemon).then(function(resolve) {
         if (resolve.code == 'ok') {
             Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
         } else {
-            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
             Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
             console.log('There was an ERROR');
         }
     }).catch(function(err) {
         console.log(err);
-        mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+        mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
         Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
     });
 }
@@ -418,7 +418,7 @@ Baobab.onText(/^\/Debilidades/, function(msg) {
     Baobab.deleteMessage(chatId, msgId);
     texto = texto.split(" ");
     if (texto.length < 2) {
-        Baobab.sendMessage(chatId, "Hace falta meter el nombre o número del Pokemon junto al comando");
+        Baobab.sendMessage(chatId, "Hace falta meter el nombre o número del Pokémon junto al comando");
     } else {
         var pokemon = texto[1];
 
@@ -428,13 +428,13 @@ Baobab.onText(/^\/Debilidades/, function(msg) {
             if (resolve.code == 'ok') {
                 Baobab.sendMessage(chatId, resolve.data);
             } else {
-                mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+                mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
                 Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
                 console.log('There was an ERROR');
             }
         }).catch(function(err) {
             console.log(err);
-            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
             Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
         });
     }
@@ -449,19 +449,19 @@ var Debilidades = function(msg) {
     texto = texto.split(" ");
     var pokemon = texto[0];
 
-    console.log("Pokemon a buscar: " + pokemon);
+    console.log("Pokémon a buscar: " + pokemon);
 
     Pokedex.Debilidades(pokemon).then(function(resolve) {
         if (resolve.code == 'ok') {
             Baobab.sendMessage(chatId, resolve.data);
         } else {
-            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+            mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
             Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
             console.log('There was an ERROR');
         }
     }).catch(function(err) {
         console.log(err);
-        mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokemon no existente";
+        mensaje = "Error al buscar a " + pokemon + "\n Nombre mal introducido o pokémon no existente";
         Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
     });
 
@@ -660,13 +660,13 @@ Baobab.onText(/^\/Captura/, function(msg) {
             if (resolve.code == 'ok') {
                 Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
             } else {
-                mensaje = "Error al buscar a " + texto[1] + "\n Nombre mal introducido o pokemon no existente";
+                mensaje = "Error al buscar a " + texto[1] + "\n Nombre mal introducido o pokémon no existente";
                 Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
                 console.log('There was an ERROR');
             }
         }).catch(function(err) {
             console.log(err);
-            mensaje = "Error al buscar a " + texto[1] + "\n Nombre mal introducido o pokemon no existente";
+            mensaje = "Error al buscar a " + texto[1] + "\n Nombre mal introducido o pokémon no existente";
             Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
         });
     }
@@ -710,7 +710,7 @@ Baobab.on('callback_query', function(boton) {
                 peticion: 1
             };
             peticiones.push(peticion);
-            Baobab.sendMessage(chatId, "¿Qué Pókemon buscas? \nPuedes usar su nombre o número nacional");
+            Baobab.sendMessage(chatId, "¿Qué Pokémon buscas? \nPuedes usar su nombre o número nacional");
             break;
         case 'STATS':
             var peticion = {
@@ -718,10 +718,10 @@ Baobab.on('callback_query', function(boton) {
                 peticion: 2
             };
             peticiones.push(peticion);
-            Baobab.sendMessage(chatId, "¿Qué Pókemon buscas? \nPuedes usar su nombre o número nacional");
+            Baobab.sendMessage(chatId, "¿Qué Pokémon buscas? \nPuedes usar su nombre o número nacional");
             break;
         case 'RANDOM':
-            Baobab.sendMessage(chatId, "Y el Pókemon random es...");
+            Baobab.sendMessage(chatId, "Y el Pokémon random es...");
             Random(msg);
             break;
         case 'HABILIDAD':
@@ -738,7 +738,7 @@ Baobab.on('callback_query', function(boton) {
                 peticion: 4
             };
             peticiones.push(peticion);
-            Baobab.sendMessage(chatId, "¿De qué Pókemon quieres saber las debilidades? \nPuedes usar su nombre o número nacional");
+            Baobab.sendMessage(chatId, "¿De qué Pokémon quieres saber las debilidades? \nPuedes usar su nombre o número nacional");
             break;
         case 'TIPO':
             funtipos(msg);
@@ -867,14 +867,14 @@ Baobab.on('callback_query', function(boton) {
                         Baobab.sendPhoto(chatId, resolve.img, { caption: resolve.data });
                         peticiones.splice(npet, 1);
                     } else {
-                        mensaje = "Error al buscar a " + peticiones[npet].pokemon + "\n Nombre mal introducido o pokemon no existente";
+                        mensaje = "Error al buscar a " + peticiones[npet].pokemon + "\n Nombre mal introducido o pokémon no existente";
                         Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
                         console.log('There was an ERROR');
                         peticiones.splice(npet, 1);
                     }
                 }).catch(function(err) {
                     console.log(err);
-                    mensaje = "Error al buscar a " + peticiones[npet].pokemon + "\n Nombre mal introducido o pokemon no existente";
+                    mensaje = "Error al buscar a " + peticiones[npet].pokemon + "\n Nombre mal introducido o pokémon no existente";
                     Baobab.sendPhoto(chatId, 'http://pm1.narvii.com/6401/61c75e3c02ebf7178cff4c6bf96168096e6ffaaf_00.jpg', { caption: mensaje });
                     peticiones.splice(npet, 1);
                 });
